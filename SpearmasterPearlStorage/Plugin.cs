@@ -9,12 +9,12 @@ namespace SpearmasterPearlStorage
 {
     //also edit version in "modinfo.json"
     [BepInPlugin("maxi-mol.spearmasterpearlstorage", "Spearmaster Pearl Storage", "0.1.0")] //(GUID, mod name, mod version)
-    public class SpearmasterPearlStorage : BaseUnityPlugin
+    public class Plugin : BaseUnityPlugin
     {
         //for accessing logger https://rainworldmodding.miraheze.org/wiki/Code_Environments
         private static WeakReference __me; //WeakReference still allows garbage collection
-        public SpearmasterPearlStorage() { __me = new WeakReference(this); }
-        public static SpearmasterPearlStorage ME => __me?.Target as SpearmasterPearlStorage;
+        public Plugin() { __me = new WeakReference(this); }
+        public static Plugin ME => __me?.Target as Plugin;
         public BepInEx.Logging.ManualLogSource Logger_p => Logger;
 
         private static bool IsEnabled = false;
@@ -29,7 +29,7 @@ namespace SpearmasterPearlStorage
             Enums.RegisterValues();
             Hooks.Apply();
 
-            SpearmasterPearlStorage.ME.Logger_p.LogInfo("OnEnable called");
+            Plugin.ME.Logger_p.LogInfo("OnEnable called");
         }
 
 
@@ -42,7 +42,7 @@ namespace SpearmasterPearlStorage
             Enums.UnregisterValues();
             Hooks.Unapply();
 
-            SpearmasterPearlStorage.ME.Logger_p.LogInfo("OnDisable called");
+            Plugin.ME.Logger_p.LogInfo("OnDisable called");
         }
     }
 }
