@@ -9,10 +9,13 @@ namespace SpearmasterPearlStorage
     {
         public static void Apply()
         {
+            //allows spearmaster to put pearl in stomach
             On.Player.GrabUpdate += PlayerGrabUpdateHook;
 
+            //regurgitate the correct object
             On.Player.Regurgitate += PlayerRegurgitateHook;
 
+            //changes return value CanBeSwallowed for Spearmaster to TRUE
             On.Player.CanBeSwallowed += PlayerCanBeSwallowedHook;
         }
 
@@ -23,15 +26,29 @@ namespace SpearmasterPearlStorage
         }
 
 
-        //allows spearmaster to eat/put items in stomach
+        //allows spearmaster to put pearl in stomach
         static void PlayerGrabUpdateHook(On.Player.orig_GrabUpdate orig, Player self, bool eu)
         {
             bool isSpearmaster = (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
-            bool hasFreeHand = self.FreeHand() != -1;
+            bool hasFreeHand = self.FreeHand() != -1; //no free hands so spears get created
 
-            //temporary set to Survivor
-            if (isSpearmaster && !hasFreeHand)
-                self.SlugCatClass = SlugcatStats.Name.White;
+            if (isSpearmaster && self.grasps != null && self.grasps.Length > 0)
+            {
+                //check food in hand
+                bool foodInHand = false;
+                for (int i = 0; i < self.grasps.Length; i++)
+                    if (self.grasps[i] != null && self.grasps[i].grabbed is IPlayerEdible)
+                        foodInHand = true;
+
+                //datapearl must be first to be swallowed
+                if (self.grasps.Length >= 2 && !(self.grasps[0]?.grabbed is DataPearl) && self.grasps[1]?.grabbed is DataPearl)
+                    if (self.switchHandsProcess == 0f && self.switchHandsCounter == 0)
+                        self.switchHandsCounter = 15;
+
+                //get in/out of stomach
+                if (!hasFreeHand && !foodInHand && (self.grasps[0]?.grabbed is DataPearl || self.objectInStomach != null))
+                    self.SlugCatClass = SlugcatStats.Name.White; //temporary set to Survivor
+            }
 
             orig(self, eu);
 
