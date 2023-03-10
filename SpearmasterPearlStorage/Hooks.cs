@@ -15,7 +15,7 @@ namespace SpearmasterPearlStorage
             //regurgitate the correct object
             On.Player.Regurgitate += PlayerRegurgitateHook;
 
-            //changes return value CanBeSwallowed for Spearmaster to TRUE
+            //makes Spearmaster be able to swallow pearls
             On.Player.CanBeSwallowed += PlayerCanBeSwallowedHook;
         }
 
@@ -32,29 +32,18 @@ namespace SpearmasterPearlStorage
             bool isSpearmaster = (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
             bool hasFreeHand = self.FreeHand() != -1; //no free hands so spears get created
 
+            //check food in hand
+            bool foodInHand = false;
             if (isSpearmaster && self.grasps != null && self.grasps.Length > 0)
-            {
-                //check food in hand
-                bool foodInHand = false;
                 for (int i = 0; i < self.grasps.Length; i++)
                     if (self.grasps[i] != null && self.grasps[i].grabbed is IPlayerEdible)
                         foodInHand = true;
 
-                //datapearl must be first to be swallowed
-                if (self.grasps.Length >= 2 && !(self.grasps[0]?.grabbed is DataPearl) && self.grasps[1]?.grabbed is DataPearl)
-                    if (self.switchHandsProcess == 0f && self.switchHandsCounter == 0)
-                        self.switchHandsCounter = 15;
-
-                //get in/out of stomach
-                if (!hasFreeHand && !foodInHand && (self.grasps[0]?.grabbed is DataPearl || self.objectInStomach != null))
-                    self.SlugCatClass = SlugcatStats.Name.White; //temporary set to Survivor
-            }
+            //Plugin.ME.Logger_p.LogInfo("");
 
             orig(self, eu);
 
-            //reset to Spearmaster
-            if (isSpearmaster)
-                self.SlugCatClass = MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
+
         }
 
 
@@ -77,22 +66,12 @@ namespace SpearmasterPearlStorage
         }
 
 
-        //changes return value CanBeSwallowed for Spearmaster to TRUE
+        //makes Spearmaster be able to swallow pearls
         static bool PlayerCanBeSwallowedHook(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
         {
-            bool isSpearmaster = (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
-
-            //temporary set to Survivor
-            if (isSpearmaster)
-                self.SlugCatClass = SlugcatStats.Name.White;
-
-            bool ret = orig(self, testObj);
-
-            //reset to Spearmaster
-            if (isSpearmaster)
-                self.SlugCatClass = MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
-
-            return ret;
+            if (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && testObj is DataPearl)
+                return true;
+            return orig(self, testObj);
         }
     }
 }
