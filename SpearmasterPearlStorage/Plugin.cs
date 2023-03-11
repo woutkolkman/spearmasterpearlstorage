@@ -19,6 +19,11 @@ namespace SpearmasterPearlStorage
         public static Plugin ME => __me?.Target as Plugin;
         public BepInEx.Logging.ManualLogSource Logger_p => Logger;
 
+        //reference metadata
+        public string GUID;
+        public string Name;
+        public string Version;
+
         private static bool IsEnabled = false;
 
 
@@ -31,6 +36,10 @@ namespace SpearmasterPearlStorage
             Enums.RegisterValues();
             Hooks.Apply();
             Patches.Apply();
+
+            GUID = Info.Metadata.GUID;
+            Name = Info.Metadata.Name;
+            Version = Info.Metadata.Version.ToString();
 
             Plugin.ME.Logger_p.LogInfo("OnEnable called");
         }

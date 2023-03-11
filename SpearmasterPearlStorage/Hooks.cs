@@ -1,11 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using RWCustom;
-using System.Reflection;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
-using MonoMod.RuntimeDetour;
-using System.Collections.Generic;
 
 namespace SpearmasterPearlStorage
 {
@@ -13,13 +7,16 @@ namespace SpearmasterPearlStorage
     {
         public static void Apply()
         {
+            //for options
+            On.RainWorld.OnModsInit += RainWorldOnModsInitHook;
+
             //regurgitate the correct object
             On.Player.Regurgitate += PlayerRegurgitateHook;
 
             //makes Spearmaster be able to only swallow pearls
             On.Player.CanBeSwallowed += PlayerCanBeSwallowedHook;
 
-            //overwrite Spearmaster swallow animation
+            //overwrite parts of Spearmaster swallow animation
             On.PlayerGraphics.Update += PlayerGraphicsUpdateHook;
         }
 
@@ -27,6 +24,14 @@ namespace SpearmasterPearlStorage
         public static void Unapply()
         {
             //TODO
+        }
+
+
+        //for options
+        static void RainWorldOnModsInitHook(On.RainWorld.orig_OnModsInit orig, RainWorld self)
+        {
+            orig(self);
+            MachineConnector.SetRegisteredOI(Plugin.ME.GUID, new Options());
         }
 
 
@@ -63,21 +68,19 @@ namespace SpearmasterPearlStorage
         //makes Spearmaster be able to only swallow pearls
         static bool PlayerCanBeSwallowedHook(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
         {
-            if (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && testObj is DataPearl)
-                return true;
-            return orig(self, testObj);
+            bool ret = orig(self, testObj);
+            ret |= (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && testObj is DataPearl);
+            return ret;
         }
 
 
-        //overwrite Spearmaster swallow animation
+        //overwrite parts of Spearmaster swallow animation
         static void PlayerGraphicsUpdateHook(On.PlayerGraphics.orig_Update orig, PlayerGraphics self)
         {
             orig(self);
 
-            bool isSpearmaster = (self.player.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
-
             //hands
-            if (isSpearmaster && 
+            if (self.player.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && 
                 self.player.swallowAndRegurgitateCounter > 10 && 
                 self.player.objectInStomach == null)
             {
