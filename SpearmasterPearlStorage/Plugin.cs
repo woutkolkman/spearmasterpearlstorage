@@ -1,8 +1,10 @@
 ﻿using BepInEx;
 using System;
+using System.Security;
 using System.Security.Permissions;
 #pragma warning disable CS0618
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
+[module: UnverifiableCode]
 #pragma warning restore CS0618
 
 namespace SpearmasterPearlStorage
@@ -28,6 +30,7 @@ namespace SpearmasterPearlStorage
 
             Enums.RegisterValues();
             Hooks.Apply();
+            Patches.Apply();
 
             Plugin.ME.Logger_p.LogInfo("OnEnable called");
         }
@@ -41,6 +44,7 @@ namespace SpearmasterPearlStorage
 
             Enums.UnregisterValues();
             Hooks.Unapply();
+            Patches.Unapply();
 
             Plugin.ME.Logger_p.LogInfo("OnDisable called");
         }
