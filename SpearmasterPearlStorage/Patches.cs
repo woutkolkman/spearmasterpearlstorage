@@ -17,7 +17,7 @@ namespace SpearmasterPearlStorage
          */
         public static void Apply()
         {
-            //allows spearmaster to put pearl in stomach
+            //allows spearmaster to swallow any item if both hands are full
             IL.Player.GrabUpdate += PlayerGrabUpdateIL;
         }
 
@@ -28,7 +28,7 @@ namespace SpearmasterPearlStorage
         }
 
 
-        //allows spearmaster to put pearl in stomach
+        //allows spearmaster to swallow any item if both hands are full
         static void PlayerGrabUpdateIL(ILContext il)
         {
             Plugin.ME.Logger_p.LogInfo("PlayerGrabUpdateIL start");

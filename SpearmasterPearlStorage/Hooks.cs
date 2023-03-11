@@ -15,7 +15,7 @@ namespace SpearmasterPearlStorage
             //regurgitate the correct object
             On.Player.Regurgitate += PlayerRegurgitateHook;
 
-            //makes Spearmaster be able to swallow pearls
+            //makes Spearmaster be able to only swallow pearls
             On.Player.CanBeSwallowed += PlayerCanBeSwallowedHook;
         }
 
@@ -29,7 +29,7 @@ namespace SpearmasterPearlStorage
         //regurgitate the correct object
         static void PlayerRegurgitateHook(On.Player.orig_Regurgitate orig, Player self)
         {
-            //by default spearmaster has nothing in stomach, and creates a new SpearMasterPearl when regurgitating
+            //by default spearmaster has nothing in stomach, and creates a new SpearMasterPearl object when regurgitating
             //this hook allows objectInStomach to be regurgitated
             bool isSpearmaster = (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
 
@@ -45,7 +45,7 @@ namespace SpearmasterPearlStorage
         }
 
 
-        //makes Spearmaster be able to swallow pearls
+        //makes Spearmaster be able to only swallow pearls
         static bool PlayerCanBeSwallowedHook(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
         {
             if (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && testObj is DataPearl)
