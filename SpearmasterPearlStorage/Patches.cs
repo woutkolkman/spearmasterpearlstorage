@@ -11,7 +11,7 @@ namespace SpearmasterPearlStorage
     class Patches
     {
         /*
-         Thanks @oatmealine for the code example on Discord.
+         Thanks @oatmealine for the code example on Discord: https://discord.com/channels/1083481230839922688/1083484108056957089/1083549654207172708
          RainWorld Discord: https://discord.gg/rainworld
          Modding Discord: https://discord.gg/bh8Jzwqes6
          */
@@ -31,12 +31,17 @@ namespace SpearmasterPearlStorage
         //allows spearmaster to swallow any item if both hands are full
         static void PlayerGrabUpdateIL(ILContext il)
         {
-            Plugin.ME.Logger_p.LogInfo("PlayerGrabUpdateIL start");
+            //original code:
+            //  (!ModManager.MSC || this.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear)
+            //resulting code is functionally the same as:
+            //  (!ModManager.MSC || self.FreeHand() == -1 || this.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear)
+
             ILCursor c = new ILCursor(il);
 
-            try {
+            try
+            {
                 for (int j = 0; j <= 1; j++)                                                            //skip the first match, because that's where speartail is updated, second match is where swallow is allowed
-                    c.GotoNext(MoveType.After,                                                          //in C# code: this.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear
+                    c.GotoNext(MoveType.After,
                         i => i.MatchLdarg(0),                                                           //ldarg.0
                         i => i.MatchLdfld<Player>("SlugCatClass"),                                      //ldfld     class SlugcatStats/Name Player::SlugCatClass
                         i => i.MatchLdsfld<MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName>("Spear"),   //ldsfld    class SlugcatStats/Name MoreSlugcats.MoreSlugcatsEnums/SlugcatStatsName::Spear

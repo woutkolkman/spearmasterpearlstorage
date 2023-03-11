@@ -33,11 +33,18 @@ namespace SpearmasterPearlStorage
             //this hook allows objectInStomach to be regurgitated
             bool isSpearmaster = (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
 
-            //non-ideal solution, temporary set to Survivor
-            if (isSpearmaster && self.objectInStomach != null)
+            //temporarily save objectInStomach (might be null)
+            AbstractPhysicalObject temp = self.objectInStomach;
+
+            //non-ideal solution, temporary set to Survivor if not stunned by Pebbles
+            if (isSpearmaster && self.objectInStomach != null && !self.Stunned)
                 self.SlugCatClass = SlugcatStats.Name.White;
 
             orig(self);
+
+            //restore objectInStomach if pearl is extracted by Pebbles
+            if (isSpearmaster && self.Stunned)
+                self.objectInStomach = temp;
 
             //reset to Spearmaster
             if (isSpearmaster)
