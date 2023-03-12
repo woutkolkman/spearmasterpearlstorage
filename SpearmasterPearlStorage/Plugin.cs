@@ -33,7 +33,6 @@ namespace SpearmasterPearlStorage
             if (IsEnabled) return;
             IsEnabled = true;
 
-            Enums.RegisterValues();
             Hooks.Apply();
             Patches.Apply();
 
@@ -51,7 +50,6 @@ namespace SpearmasterPearlStorage
             if (!IsEnabled) return;
             IsEnabled = false;
 
-            Enums.UnregisterValues();
             Hooks.Unapply();
             Patches.Unapply();
 

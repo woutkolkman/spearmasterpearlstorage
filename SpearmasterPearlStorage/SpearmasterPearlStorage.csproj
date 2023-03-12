@@ -33,7 +33,6 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Enums.cs" />
     <Compile Include="Hooks.cs" />
     <Compile Include="Options.cs" />
     <Compile Include="Patches.cs" />

@@ -7,7 +7,7 @@ namespace SpearmasterPearlStorage
     {
         public static void Apply()
         {
-            //for options
+            //initialize options
             On.RainWorld.OnModsInit += RainWorldOnModsInitHook;
 
             //regurgitate the correct object
@@ -27,7 +27,7 @@ namespace SpearmasterPearlStorage
         }
 
 
-        //for options
+        //initialize options
         static void RainWorldOnModsInitHook(On.RainWorld.orig_OnModsInit orig, RainWorld self)
         {
             orig(self);
@@ -69,7 +69,25 @@ namespace SpearmasterPearlStorage
         static bool PlayerCanBeSwallowedHook(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
         {
             bool ret = orig(self, testObj);
-            ret |= (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && testObj is DataPearl);
+
+            if (self.SlugCatClass != MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)
+                return ret;
+
+            //check if pearl is removed if requirePearlRemoval option is true
+            bool campaignAllowsSwallow = (
+                self.room?.game?.GetStorySession?.saveState?.miscWorldSaveData != null &&
+                self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad > 0
+            );
+            campaignAllowsSwallow |= (
+                self.graphicsModule is PlayerGraphics &&
+                (self.graphicsModule as PlayerGraphics).bodyPearl != null &&
+                (self.graphicsModule as PlayerGraphics).bodyPearl.scarVisible
+            );
+            if (Options.requirePearlRemoval.Value && !campaignAllowsSwallow)
+                return ret;
+            
+            //Spearmaster may swallow any pearl
+            ret |= (testObj is DataPearl);
             return ret;
         }
 
