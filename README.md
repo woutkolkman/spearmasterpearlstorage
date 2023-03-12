@@ -10,7 +10,9 @@ Next, enable Spearmaster Pearl Storage via the in-game Remix menu.
 Why have dual wielding when you need to carry a pearl for half the campaign? This mod lets you put the pearl back where it came from.. Definitely not (very) painfull.
 
 Use it the same way other slugcats store pearls.  
-Note that this mod removes part of the challenge of playing Spearmaster.
+I'd advice not to use this mod, as it removes part of the original challenge of playing Spearmaster.  
+Works alongside drWoof's Swallow Everything, the limitations in the Options menu will be ignored.  
+Disabling this mod does not delete a stored object, except when visiting Pebbles for the first time.
 
 Tested on v1.9.06
 

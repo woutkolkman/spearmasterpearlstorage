@@ -75,19 +75,34 @@ namespace SpearmasterPearlStorage
 
             //check if pearl is removed if requirePearlRemoval option is true
             bool campaignAllowsSwallow = (
-                self.room?.game?.GetStorySession?.saveState?.miscWorldSaveData != null &&
-                self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad > 0
+                Options.afterScarFade.Value && 
+                (self.room?.game?.GetStorySession == null || //not campaign allows swallow
+                (self.room?.game?.GetStorySession?.saveState?.miscWorldSaveData != null && 
+                self.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiConversationsHad > 0))
             );
             campaignAllowsSwallow |= (
-                self.graphicsModule is PlayerGraphics &&
-                (self.graphicsModule as PlayerGraphics).bodyPearl != null &&
+                self.graphicsModule is PlayerGraphics && 
+                (self.graphicsModule as PlayerGraphics).bodyPearl != null && 
                 (self.graphicsModule as PlayerGraphics).bodyPearl.scarVisible
             );
             if (Options.requirePearlRemoval.Value && !campaignAllowsSwallow)
                 return ret;
-            
+
             //Spearmaster may swallow any pearl
             ret |= (testObj is DataPearl);
+
+            //Spearmaster may swallow any regular item
+            ret |= (Options.anyRegularObject.Value && (
+                testObj is Rock || testObj is DataPearl || testObj is FlareBomb || 
+                testObj is Lantern || testObj is FirecrackerPlant || 
+                (testObj is VultureGrub && !(testObj as VultureGrub).dead) || 
+                (testObj is Hazer && !(testObj as Hazer).dead && !(testObj as Hazer).hasSprayed) || 
+                testObj is FlyLure || testObj is ScavengerBomb || testObj is PuffBall || 
+                testObj is SporePlant || testObj is BubbleGrass || testObj is SSOracleSwarmer || 
+                testObj is NSHSwarmer || testObj is OverseerCarcass || 
+                (ModManager.MSC && testObj is MoreSlugcats.FireEgg) || 
+                (ModManager.MSC && testObj is MoreSlugcats.SingularityBomb && !(testObj as MoreSlugcats.SingularityBomb).activateSingularity && !(testObj as MoreSlugcats.SingularityBomb).activateSucktion)
+            ));
             return ret;
         }
 
