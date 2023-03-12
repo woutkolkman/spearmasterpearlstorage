@@ -7,7 +7,7 @@ Next, enable Spearmaster Pearl Storage via the in-game Remix menu.
 
 
 ### Credits
-Thanks to the modders on the Rain World Discord, their code examples are very usefull. Join [Rain World](https://discord.gg/rainworld) / [Modding](https://discord.gg/bh8Jzwqes6). Also thanks to the [Rain World Modding Wiki](https://rainworldmodding.miraheze.org/), without this site these mods wouldn't exist.
+Thanks to the modders on the Rain World Discord, their code examples are very useful. Join [Rain World](https://discord.gg/rainworld) / [Modding](https://discord.gg/bh8Jzwqes6). Also thanks to the [Rain World Modding Wiki](https://rainworldmodding.miraheze.org/), without this site these mods wouldn't exist.
 
 
 ### Description
