@@ -13,6 +13,8 @@ Thanks to the modders on the Rain World Discord, their code examples are very us
 ### Description
 Why have dual wielding when you need to carry a pearl for half the campaign? This mod lets you put the pearl back where it came from.. Definitely not (very) painful.
 
+<img src="https://github.com/woutkolkman/spearmasterpearlstorage/blob/master/gifs/spearmasterpearlstorage.gif" height="400">
+
 Use it the same way other slugcats store pearls.  
 I'd advice not to use this mod, as it removes part of the original challenge of playing Spearmaster.  
 Works alongside drWoof's Swallow Everything, the limitations in the Options menu will be ignored.  
