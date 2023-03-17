@@ -51,15 +51,19 @@ namespace SpearmasterPearlStorage
 
             orig(self);
 
-            //TODO offset pearl downwards
+            if (!isSpearmaster)
+                return;
+
+            //place pearl in front of scar
+            if (!self.Stunned && temp.realizedObject?.firstChunk != null && self.bodyChunks?.Length >= 2)
+                temp.realizedObject.firstChunk.HardSetPosition(Vector2.Lerp(self.bodyChunks[0].pos, self.bodyChunks[1].pos, 0.5f));
 
             //restore objectInStomach if pearl is extracted by Pebbles
-            if (isSpearmaster && self.Stunned)
+            if (self.Stunned)
                 self.objectInStomach = temp;
 
             //reset to Spearmaster
-            if (isSpearmaster)
-                self.SlugCatClass = MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
+            self.SlugCatClass = MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
         }
 
 
