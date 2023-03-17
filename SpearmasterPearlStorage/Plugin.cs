@@ -10,7 +10,7 @@ using System.Security.Permissions;
 namespace SpearmasterPearlStorage
 {
     //also edit version in "modinfo.json"
-    [BepInPlugin("maxi-mol.spearmasterpearlstorage", "Spearmaster Pearl Storage", "0.1.0")] //(GUID, mod name, mod version)
+    [BepInPlugin("maxi-mol.spearmasterpearlstorage", "Spearmaster Pearl Storage", "0.1.1")] //(GUID, mod name, mod version)
     public class Plugin : BaseUnityPlugin
     {
         //for accessing logger https://rainworldmodding.miraheze.org/wiki/Code_Environments

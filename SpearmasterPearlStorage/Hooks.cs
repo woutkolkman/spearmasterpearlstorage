@@ -51,10 +51,6 @@ namespace SpearmasterPearlStorage
 
             orig(self);
 
-            //offset position for regurgitated object (in front of hole)
-            if (isSpearmaster && !self.Stunned && self.standing && temp.realizedObject?.firstChunk != null)
-                temp.realizedObject.firstChunk.pos += new Vector2(0,-10);
-
             //restore objectInStomach if pearl is extracted by Pebbles
             if (isSpearmaster && self.Stunned)
                 self.objectInStomach = temp;

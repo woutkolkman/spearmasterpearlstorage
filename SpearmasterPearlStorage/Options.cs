@@ -10,13 +10,15 @@ namespace SpearmasterPearlStorage
         public static Configurable<bool> requirePearlRemoval;
         public static Configurable<bool> afterScarFade;
         public static Configurable<bool> anyRegularObject;
+        public static Configurable<bool> whenHandsFull;
 
 
         public Options()
         {
-            requirePearlRemoval = config.Bind("requirePearlRemoval", defaultValue: true, new ConfigurableInfo("When disabled, pearls can be stored at any point in the campaign.", null, "", "Require pearl removal"));
+            requirePearlRemoval = config.Bind("requirePearlRemoval", defaultValue: true, new ConfigurableInfo("When unchecked, pearls can be stored at any point in the campaign.", null, "", "Require pearl removal"));
             afterScarFade = config.Bind("afterScarFade", defaultValue: true, new ConfigurableInfo("Allow pearl storage after scar has faded. You can still regurgitate a stored pearl.", null, "", "After scar faded"));
-            anyRegularObject = config.Bind("anyRegularObject", defaultValue: false, new ConfigurableInfo("If true, storage is not limited to pearls.", null, "", "Allow regular objects"));
+            anyRegularObject = config.Bind("anyRegularObject", defaultValue: false, new ConfigurableInfo("If checked, storage is not limited to pearls.", null, "", "Allow regular objects"));
+            whenHandsFull = config.Bind("whenHandsFull", defaultValue: true, new ConfigurableInfo("Only allow storage when both hands are full, so it doesn't interfere with creating spears. Uncheck to support Rebind Spearmaster.", null, "", "Only when hands are full"));
         }
 
         
@@ -31,6 +33,7 @@ namespace SpearmasterPearlStorage
             AddCheckbox(requirePearlRemoval, 500f);
             AddCheckbox(afterScarFade, 460f);
             AddCheckbox(anyRegularObject, 420f);
+            AddCheckbox(whenHandsFull, 380f);
         }
 
 

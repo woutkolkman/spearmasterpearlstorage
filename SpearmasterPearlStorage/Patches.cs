@@ -61,10 +61,10 @@ namespace SpearmasterPearlStorage
             //insert condition
             c.Emit(OpCodes.Ldarg_0);
             c.EmitDelegate<Func<Player, bool>>(self => {
-                return self.FreeHand() == -1; //allow swallow only if player has no free hands, so spears can get created
+                return self.FreeHand() == -1 || !Options.whenHandsFull.Value; //allow swallow only if player has no free hands, so spears can get created
             });
 
-            // if it's true, skip spearmaster condition
+            //if it's true, skip spearmaster condition
             c.Emit(OpCodes.Brtrue_S, skipSpearCondition);
 
             Plugin.ME.Logger_p.LogInfo("PlayerGrabUpdateIL success");
