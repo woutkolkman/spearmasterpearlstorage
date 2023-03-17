@@ -51,6 +51,8 @@ namespace SpearmasterPearlStorage
 
             orig(self);
 
+            //TODO offset pearl downwards
+
             //restore objectInStomach if pearl is extracted by Pebbles
             if (isSpearmaster && self.Stunned)
                 self.objectInStomach = temp;
@@ -69,7 +71,7 @@ namespace SpearmasterPearlStorage
             if (self.SlugCatClass != MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)
                 return ret;
 
-            //check if pearl is removed if requirePearlRemoval option is true
+            //check if pearl is removed when requirePearlRemoval option is true
             bool campaignAllowsSwallow = (
                 Options.afterScarFade.Value && 
                 (self.room?.game?.GetStorySession == null || //not campaign allows swallow
