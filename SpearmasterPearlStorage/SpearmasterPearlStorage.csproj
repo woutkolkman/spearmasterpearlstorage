@@ -69,6 +69,6 @@
   <PropertyGroup>
     <PostBuildEvent>echo
 xcopy /y /d "$(ProjectDir)bin\Debug\SpearmasterPearlStorage.dll" "$(ProjectDir)bin\spearmasterpearlstorage\plugins\"
-xcopy /u /y "$(ProjectDir)bin\Debug\SpearmasterPearlStorage.dll" "C:\Users\Wout Kolkman\Documents\Games\Steam\SteamApps\common\Rain World\RainWorld_Data\StreamingAssets\mods\spearmasterpearlstorage\plugins\" || cd .</PostBuildEvent>
+xcopy /u /y "$(ProjectDir)bin\Debug\SpearmasterPearlStorage.dll" "C:\Program Files (x86)\Steam\SteamApps\common\Rain World\RainWorld_Data\StreamingAssets\mods\spearmasterpearlstorage\plugins\" || cd .</PostBuildEvent>
   </PropertyGroup>
 </Project>
