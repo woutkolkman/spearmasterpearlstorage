@@ -46,6 +46,7 @@ namespace SpearmasterPearlStorage
                     );
             } catch (Exception ex) {
                 Plugin.ME.Logger_p.LogInfo("PlayerGrabUpdateIL exception: " + ex.ToString());
+                return;
             }
 
             //label to go to if condition succeeds
