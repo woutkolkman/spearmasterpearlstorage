@@ -18,6 +18,9 @@ namespace SpearmasterPearlStorage
 
             //overwrite parts of Spearmaster swallow animation
             On.PlayerGraphics.Update += PlayerGraphicsUpdateHook;
+
+            //for stun option
+            On.Player.SwallowObject += PlayerSwallowObjectHook;
         }
 
 
@@ -40,7 +43,7 @@ namespace SpearmasterPearlStorage
         {
             //by default spearmaster has nothing in stomach, and creates a new SpearMasterPearl object when regurgitating
             //this hook allows objectInStomach to be regurgitated
-            bool isSpearmaster = (self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear);
+            bool isSpearmaster = self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
 
             //temporarily save objectInStomach (might be null)
             AbstractPhysicalObject temp = self.objectInStomach;
@@ -146,6 +149,21 @@ namespace SpearmasterPearlStorage
                     }
                 }
             }
+        }
+
+
+        //for stun option
+        static void PlayerSwallowObjectHook(On.Player.orig_SwallowObject orig, Player self, int grasp)
+        {
+            bool wasNull = self.objectInStomach == null;
+
+            orig(self, grasp);
+
+            if (self.SlugCatClass != MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)
+                return;
+
+            if (Options.stun?.Value == true && wasNull && self.objectInStomach != null)
+                self.Stun(40);
         }
     }
 }
