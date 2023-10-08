@@ -121,32 +121,33 @@ namespace SpearmasterPearlStorage
         {
             orig(self);
 
-            //hands
-            if (self.player.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear && 
-                self.player.swallowAndRegurgitateCounter > 10 && 
-                self.player.objectInStomach == null)
+            if (self.player.SlugCatClass != MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)
+                return;
+
+            if (self.player.swallowAndRegurgitateCounter <= 10 ||
+                self.player.objectInStomach != null)
+                return;
+
+            for (int i = 0; i < self.player.graphicsModule.bodyParts.Length; i++)
             {
-                for (int i = 0; i < self.player.graphicsModule.bodyParts.Length; i++)
-                {
-                    if (!(self.player.graphicsModule.bodyParts[i] is SlugcatHand))
-                        continue;
-                    SlugcatHand hand = self.player.graphicsModule.bodyParts[i] as SlugcatHand;
+                if (!(self.player.graphicsModule.bodyParts[i] is SlugcatHand))
+                    continue;
+                SlugcatHand hand = self.player.graphicsModule.bodyParts[i] as SlugcatHand;
 
-                    //check which limb will swallow
-                    int limbToSwallow = -1;
-                    int j = 0;
-                    while (limbToSwallow < 0 && j < 2) {
-                        if (self.player.grasps[j] != null && self.player.CanBeSwallowed(self.player.grasps[j].grabbed))
-                            limbToSwallow = j;
-                        j++;
-                    }
+                //check which limb will swallow
+                int limbToSwallow = -1;
+                int j = 0;
+                while (limbToSwallow < 0 && j < 2) {
+                    if (self.player.grasps[j] != null && self.player.CanBeSwallowed(self.player.grasps[j].grabbed))
+                        limbToSwallow = j;
+                    j++;
+                }
 
-                    //offset hands downwards -10f (originally -4f)
-                    if (limbToSwallow == hand.limbNumber) {
-                        float progress = Mathf.InverseLerp(10f, 90f, (float)self.player.swallowAndRegurgitateCounter);
-                        if (progress > 0.5f)
-                            hand.relativeHuntPos = new Vector2(0f, -10f) + Custom.RNV() * 2f * UnityEngine.Random.value * Mathf.InverseLerp(0.5f, 1f, progress);
-                    }
+                //offset hands downwards -10f (originally -4f)
+                if (limbToSwallow == hand.limbNumber) {
+                    float progress = Mathf.InverseLerp(10f, 90f, (float)self.player.swallowAndRegurgitateCounter);
+                    if (progress > 0.5f)
+                        hand.relativeHuntPos = new Vector2(0f, -10f) + Custom.RNV() * 2f * UnityEngine.Random.value * Mathf.InverseLerp(0.5f, 1f, progress);
                 }
             }
         }
