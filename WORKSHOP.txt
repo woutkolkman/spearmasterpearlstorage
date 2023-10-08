@@ -2,4 +2,6 @@ Why have dual wielding when you need to carry a pearl for half the campaign? Thi
 
 Use it the same way other slugcats store pearls. If you're also using Rebind Spearmaster, you may uncheck the "Only when hands are full" checkbox in the options menu. I'd advice not to use this mod, as it removes part of the original challenge of playing Spearmaster. Works alongside drWoof's Swallow Everything, the limitations in the Options menu will be ignored. Disabling this mod does not delete a stored object, except when visiting Pebbles for the first time.
 
+If this mod breaks, try disabling some unused custom slugcat mods. Those sometimes don't do proper checks for their own slugcats. Also please send me your logfiles so I can try to add workarounds in this mod.
+
 To manually install, visit: https://github.com/woutkolkman/spearmasterpearlstorage

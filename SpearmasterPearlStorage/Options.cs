@@ -11,6 +11,7 @@ namespace SpearmasterPearlStorage
         public static Configurable<bool> afterScarFade;
         public static Configurable<bool> anyRegularObject;
         public static Configurable<bool> whenHandsFull;
+        public static Configurable<bool> stun;
 
 
         public Options()
@@ -19,6 +20,7 @@ namespace SpearmasterPearlStorage
             afterScarFade = config.Bind("afterScarFade", defaultValue: true, new ConfigurableInfo("Allow pearl storage after scar has faded. You can still regurgitate a stored pearl.", null, "", "After scar faded"));
             anyRegularObject = config.Bind("anyRegularObject", defaultValue: false, new ConfigurableInfo("If checked, storage is not limited to pearls.", null, "", "Allow regular objects"));
             whenHandsFull = config.Bind("whenHandsFull", defaultValue: true, new ConfigurableInfo("Only allow storage when both hands are full, so it doesn't interfere with creating spears. Uncheck to support Rebind Spearmaster.", null, "", "Only when hands are full"));
+            stun = config.Bind("stun", defaultValue: false, new ConfigurableInfo("Stun yourself when storing/regurgitating pearls.", null, "", "Stun"));
         }
 
         
@@ -34,6 +36,7 @@ namespace SpearmasterPearlStorage
             AddCheckbox(afterScarFade, 460f);
             AddCheckbox(anyRegularObject, 420f);
             AddCheckbox(whenHandsFull, 380f);
+            AddCheckbox(stun, 340f);
         }
 
 

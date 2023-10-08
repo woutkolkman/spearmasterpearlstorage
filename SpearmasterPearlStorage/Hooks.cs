@@ -54,8 +54,8 @@ namespace SpearmasterPearlStorage
             if (!isSpearmaster)
                 return;
 
-            //place pearl in front of scar
-            if (!self.Stunned && temp.realizedObject?.firstChunk != null && self.bodyChunks?.Length >= 2)
+            //place pearl in front of scar if not extracted by Pebbles
+            if (!self.Stunned && temp?.realizedObject?.firstChunk != null && self.bodyChunks?.Length >= 2)
                 temp.realizedObject.firstChunk.HardSetPosition(Vector2.Lerp(self.bodyChunks[0].pos, self.bodyChunks[1].pos, 0.5f));
 
             //restore objectInStomach if pearl is extracted by Pebbles
@@ -64,6 +64,10 @@ namespace SpearmasterPearlStorage
 
             //reset to Spearmaster
             self.SlugCatClass = MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
+
+            //stun option when not stunned by Pebbles
+            if (Options.stun?.Value == true && !self.Stunned)
+                self.Stun(40);
         }
 
 
