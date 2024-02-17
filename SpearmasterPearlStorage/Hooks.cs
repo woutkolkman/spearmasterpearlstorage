@@ -78,8 +78,8 @@ namespace SpearmasterPearlStorage
             //stun option when not stunned by Pebbles
             if (Options.stun?.Value == true && !stunnedByPebbles) {
                 self.stun = Mathf.Max(self.stun, 40);
-                self.aerobicLevel = 1.1f;
-                self.exhausted = true;
+                //self.aerobicLevel = 1.1f;
+                //self.exhausted = true;
                 //self.SetMalnourished(true);
             }
         }
@@ -176,8 +176,8 @@ namespace SpearmasterPearlStorage
 
             if (Options.stun?.Value == true && wasNull && self.objectInStomach != null) {
                 self.stun = Mathf.Max(self.stun, 40); //doesn't interfere with eject option
-                self.aerobicLevel = 1.1f;
-                self.exhausted = true;
+                //self.aerobicLevel = 1.1f;
+                //self.exhausted = true;
                 //self.SetMalnourished(true);
             }
         }
