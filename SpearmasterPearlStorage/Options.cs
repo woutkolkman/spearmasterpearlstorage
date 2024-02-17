@@ -12,18 +12,20 @@ namespace SpearmasterPearlStorage
         public static Configurable<bool> anyRegularObject;
         public static Configurable<bool> whenHandsFull;
         public static Configurable<bool> stun;
+        public static Configurable<bool> eject;
 
 
         public Options()
         {
-            requirePearlRemoval = config.Bind("requirePearlRemoval", defaultValue: true, new ConfigurableInfo("When unchecked, pearls can be stored at any point in the campaign.", null, "", "Require pearl removal"));
-            afterScarFade = config.Bind("afterScarFade", defaultValue: true, new ConfigurableInfo("Allow pearl storage after scar has faded. You can still regurgitate a stored pearl.", null, "", "After scar faded"));
-            anyRegularObject = config.Bind("anyRegularObject", defaultValue: false, new ConfigurableInfo("If checked, storage is not limited to pearls.", null, "", "Allow regular objects"));
-            whenHandsFull = config.Bind("whenHandsFull", defaultValue: true, new ConfigurableInfo("Only allow storage when both hands are full, so it doesn't interfere with creating spears. Uncheck to support Rebind Spearmaster.", null, "", "Only when hands are full"));
-            stun = config.Bind("stun", defaultValue: false, new ConfigurableInfo("Stun yourself when storing/regurgitating pearls.", null, "", "Stun"));
+            requirePearlRemoval = config.Bind(nameof(requirePearlRemoval), defaultValue: true, new ConfigurableInfo("When unchecked, pearls can be stored at any point in the campaign.", null, "", "Require pearl removal"));
+            afterScarFade = config.Bind(nameof(afterScarFade), defaultValue: true, new ConfigurableInfo("Allow pearl storage after scar has faded. You can still regurgitate a stored pearl.", null, "", "After scar faded"));
+            anyRegularObject = config.Bind(nameof(anyRegularObject), defaultValue: false, new ConfigurableInfo("If checked, storage is not limited to pearls.", null, "", "Allow regular objects"));
+            whenHandsFull = config.Bind(nameof(whenHandsFull), defaultValue: true, new ConfigurableInfo("Only allow storage when both hands are full, so it doesn't interfere with creating spears. Uncheck to support Rebind Spearmaster.", null, "", "Only when hands are full"));
+            stun = config.Bind(nameof(stun), defaultValue: false, new ConfigurableInfo("Stun yourself when storing/regurgitating pearls.", null, "", "Stun"));
+            eject = config.Bind(nameof(eject), defaultValue: false, new ConfigurableInfo("Eject stored object when stunned, for example after a hard landing.", null, "", "Eject when stunned"));
         }
 
-        
+
         public override void Initialize()
         {
             base.Initialize();
@@ -37,6 +39,7 @@ namespace SpearmasterPearlStorage
             AddCheckbox(anyRegularObject, 420f);
             AddCheckbox(whenHandsFull, 380f);
             AddCheckbox(stun, 340f);
+            AddCheckbox(eject, 300f);
         }
 
 

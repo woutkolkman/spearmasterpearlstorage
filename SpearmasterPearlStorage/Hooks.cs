@@ -21,6 +21,12 @@ namespace SpearmasterPearlStorage
 
             //for stun option
             On.Player.SwallowObject += PlayerSwallowObjectHook;
+
+            //for eject option
+            On.Player.Stun += PlayerStunHook;
+
+            //five pebbles update function
+            On.SSOracleBehavior.Update += SSOracleBehaviorUpdateHook;
         }
 
 
@@ -49,7 +55,8 @@ namespace SpearmasterPearlStorage
             AbstractPhysicalObject temp = self.objectInStomach;
 
             //non-ideal solution, temporary set to Survivor if not stunned by Pebbles
-            if (isSpearmaster && self.objectInStomach != null && !self.Stunned)
+            bool stunnedByPebbles = self == playerStunnedByOracle;
+            if (isSpearmaster && self.objectInStomach != null && !stunnedByPebbles)
                 self.SlugCatClass = SlugcatStats.Name.White;
 
             orig(self);
@@ -58,19 +65,19 @@ namespace SpearmasterPearlStorage
                 return;
 
             //place pearl in front of scar if not extracted by Pebbles
-            if (!self.Stunned && temp?.realizedObject?.firstChunk != null && self.bodyChunks?.Length >= 2)
+            if (!stunnedByPebbles && temp?.realizedObject?.firstChunk != null && self.bodyChunks?.Length >= 2)
                 temp.realizedObject.firstChunk.HardSetPosition(Vector2.Lerp(self.bodyChunks[0].pos, self.bodyChunks[1].pos, 0.5f));
 
             //restore objectInStomach if pearl is extracted by Pebbles
-            if (self.Stunned)
+            if (stunnedByPebbles)
                 self.objectInStomach = temp;
 
             //reset to Spearmaster
             self.SlugCatClass = MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear;
 
             //stun option when not stunned by Pebbles
-            if (Options.stun?.Value == true && !self.Stunned)
-                self.Stun(40);
+            if (Options.stun?.Value == true && !stunnedByPebbles)
+                self.stun = Mathf.Max(self.stun, 40);
         }
 
 
@@ -164,7 +171,39 @@ namespace SpearmasterPearlStorage
                 return;
 
             if (Options.stun?.Value == true && wasNull && self.objectInStomach != null)
-                self.Stun(40);
+                self.stun = Mathf.Max(self.stun, 40); //doesn't interfere with eject option
+        }
+
+
+        //for eject option
+        static void PlayerStunHook(On.Player.orig_Stun orig, Player self, int st)
+        {
+            orig(self, st);
+
+            if (self.SlugCatClass != MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Spear)
+                return;
+
+            if (Options.eject?.Value != true)
+                return;
+
+            //avoids pearl duplication bug at pebbles
+            if (self == playerStunnedByOracle)
+                return;
+            //TODO, if there's multiple oracles (like duplication with mousedrag), then spearmaster becomes a pearl factory
+
+            if (self.objectInStomach != null)
+                self.Regurgitate();
+        }
+
+
+        //five pebbles update function
+        static Player playerStunnedByOracle;
+        static void SSOracleBehaviorUpdateHook(On.SSOracleBehavior.orig_Update orig, SSOracleBehavior self, bool eu)
+        {
+            playerStunnedByOracle = null;
+            if (self.action == SSOracleBehavior.Action.General_GiveMark)
+                playerStunnedByOracle = self.player;
+            orig(self, eu);
         }
     }
 }
