@@ -7,5 +7,6 @@
   "requirements": ["moreslugcats"],
   "requirements_names": ["Downpour"],
   "tags": ["Game Mechanics", "Accessibility"],
+  "update_url": "https://github.com/woutkolkman/spearmasterpearlstorage",
   "checksum_override_version": false
 }
