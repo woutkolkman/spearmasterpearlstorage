@@ -35,7 +35,7 @@
   <ItemGroup>
     <Compile Include="Hooks.cs" />
     <Compile Include="Options.cs" />
-    <Compile Include="Patches.cs" />
+    <Compile Include="ILHooks.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

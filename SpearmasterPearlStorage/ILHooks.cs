@@ -4,7 +4,7 @@ using Mono.Cecil.Cil;
 
 namespace SpearmasterPearlStorage
 {
-    class Patches
+    class ILHooks
     {
         /*
          Thanks @oatmealine for the code example on Discord: https://discord.com/channels/1083481230839922688/1083484108056957089/1083549654207172708

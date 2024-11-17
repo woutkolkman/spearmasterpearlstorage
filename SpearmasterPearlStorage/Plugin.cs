@@ -34,7 +34,7 @@ namespace SpearmasterPearlStorage
             IsEnabled = true;
 
             Hooks.Apply();
-            Patches.Apply();
+            ILHooks.Apply();
 
             GUID = Info.Metadata.GUID;
             Name = Info.Metadata.Name;
@@ -51,7 +51,7 @@ namespace SpearmasterPearlStorage
             IsEnabled = false;
 
             Hooks.Unapply();
-            Patches.Unapply();
+            ILHooks.Unapply();
 
             Plugin.ME.Logger_p.LogInfo("OnDisable called");
         }
